@@ -1,0 +1,49 @@
+`timescale 1ns/1ps  // 时间单位/时间精度
+
+module test_yxh_2690_2_1;
+    // 定义输入输出信号
+    reg A;
+    reg B;
+    reg SEL;
+    wire L;  // 假设L是某个模块的输出，这里需根据实际设计模块调整（若未提供设计模块，可先模拟）
+
+    // 例化待测试模块（若有实际设计，需替换为真实模块名和端口映射）
+    // 若只是生成波形，可省略模块例化，直接通过initial块驱动信号
+    // 此处假设存在一个2选1多路选择器，模块定义为：
+    // module mux2_1(input A, B, SEL, output L);
+    //     assign L = SEL ? B : A;
+    // endmodule
+    // mux2_1 u_mux(.A(A), .B(B), .SEL(SEL), .L(L));
+	yxh_2690_2_1 mux(
+	.A(A),
+	.B(B), 
+	.SEL(SEL), 
+	.L(L));
+    // 驱动输入信号的initial块
+    initial begin
+        // 初始状态：0ps时，A=0，B=0，SEL=0
+        A = 0;
+        B = 0;
+        SEL = 0;
+        // 40ns时，A置1
+        #40 A = 1;
+        // 80ns时，A置0，B置1，SEL置1
+        #40 A = 0;
+        B = 1;
+        SEL = 1;
+        // 120ns时，A置1
+        #40 A = 1;
+        // 160ns时，A置0，B置0，SEL置0
+        #40 A = 0;
+        B = 0;
+        SEL = 0;
+        // 200ns时，A置1
+        #40 A = 1;
+        // 240ns时，A置0，B置1，SEL置1（重复周期，可根据需要延长仿真时间）
+        #40 A = 0;
+        B = 1;
+        SEL = 1;
+        // 仿真结束（可根据需要调整时间）
+        #40 $finish;
+    end
+endmodule
