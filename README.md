@@ -56,4 +56,8 @@ endmodule
 ```
 # 3 仿真波形
 
+<img src="/imgs/boxingtu.png" width = "80%">
+
 # 4 引脚分配
+
+<img src="/imgs/pin.png" width = "80%">
